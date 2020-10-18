@@ -4,16 +4,28 @@
   "description": "url shortener",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BTZuckier/ShortURL.git"
   },
-  "author": "",
+  "author": "Ben Zuckier",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/BTZuckier/ShortURL/issues"
   },
-  "homepage": "https://github.com/BTZuckier/ShortURL#readme"
+  "homepage": "https://github.com/BTZuckier/ShortURL#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "monk": "^7.3.2",
+    "nunjucks": "^3.2.2",
+    "shortid": "^2.2.15",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.5"
+  }
 }
