@@ -98,12 +98,11 @@ app.post('/api', async (req, res) => {//restful api that return short from long
 //     var newUrl = null;
     try { //check if long url is already in db
         var oldURL = await urls.findOne({ url });
-        return res.json(oldURL);
+        return res.json(JSON.stringify("https://bzuckier.com/" + oldURL.short));
     }catch(err){
         console.log(err);
         res.status(500).json('bad db');
     }
-//     if(!newUrl){//Long URL didn't exist in db
         var short = shortid.generate();
         while(short.match(/-|_/)){//no dashes or underscores
             short = shortid.generate();//generate a new id
@@ -114,10 +113,7 @@ app.post('/api', async (req, res) => {//restful api that return short from long
             clicks:0,
         };
         var newUrl = await urls.insert(shortUrl);
-        res.json(newURL);
-//     }
-//     var shortURL = "https://bzuckier.com/" + newURL.short;
-//     res.json(newURL);//return short url
+        return res.json(JSON.stringify("https://bzuckier.com/" + newURL.short));
 });
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
