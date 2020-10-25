@@ -95,15 +95,15 @@ app.post('/api', async (req, res) => {//restful api that return short from long
     if(url.search("http") != 0){
         url = "http://" + url;
     }
-//     var newUrl = null;
+    var newShort = null;
     try { //check if long url is already in db
-        var oldURL = await urls.findOne({ url });
-        return res.json(JSON.stringify("https://bzuckier.com/" + oldURL.short));
+        newShort = await urls.findOne({ url });
     }catch(err){
         console.log(err);
         res.status(500).json('bad db');
     }
-        var short = shortid.generate();
+    if(!newShort){
+        var short = shortid.generate();//otherwise make new one
         while(short.match(/-|_/)){//no dashes or underscores
             short = shortid.generate();//generate a new id
         }
@@ -112,8 +112,11 @@ app.post('/api', async (req, res) => {//restful api that return short from long
             short,
             clicks:0,
         };
-        var newUrl = await urls.insert(shortUrl);
-        return res.json(JSON.stringify("https://bzuckier.com/" + newURL.short));
+        var newShort = await urls.insert(shortUrl);
+    }
+    var dom = "https://bzuckier.com/";
+    var send = dom.concat(newShort.short);
+    return res.json(send);
 });
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
