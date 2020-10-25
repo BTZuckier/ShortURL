@@ -90,7 +90,7 @@ app.post('/search', async (req, res, next) => {
     return next();//render the page with new data
 }, home);
 
-app.post('/api/', async (req, res) => {//restful api that return short from long
+app.post('/api', async (req, res) => {//restful api that return short from long
     var url = req.body.LongURL;//get the long url from the POST
     if(url.search("http") != 0){
         url = "http://" + url;
@@ -114,7 +114,8 @@ app.post('/api/', async (req, res) => {//restful api that return short from long
         };
         newUrl = await urls.insert(shortUrl);
     }
-    res.json('data');//return short url
+    var shortURL = "https://bzuckier.com/" + newURL.short;
+    res.json(JSON.stringify(shortURL));//return short url
 });
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
