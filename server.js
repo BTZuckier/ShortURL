@@ -95,9 +95,10 @@ app.post('/api', async (req, res) => {//restful api that return short from long
     if(url.search("http") != 0){
         url = "http://" + url;
     }
-    var newUrl = null;
+//     var newUrl = null;
     try { //check if long url is already in db
-        newUrl = await urls.findOne({ url });
+        var newUrl = await urls.findOne({ url });
+        return res.json(newURL);
     }catch(err){
         console.log(err);
         res.status(500).json('bad db');
@@ -112,10 +113,11 @@ app.post('/api', async (req, res) => {//restful api that return short from long
             short,
             clicks:0,
         };
-        newUrl = await urls.insert(shortUrl);
+        var newUrl = await urls.insert(shortUrl);
+        res.json(newURL);
     }
 //     var shortURL = "https://bzuckier.com/" + newURL.short;
-    res.json(newURL);//return short url
+//     res.json(newURL);//return short url
 });
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
