@@ -3,11 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-    <title>Document</title>
+    <link rel="icon" href="./favicon.ico">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Shorten URLs</title>
 </head>
 <body>
-    <h1 style="font-family:Roboto">Shorten URL</h1>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <a class="navbar-brand" href="./">Shorten URLs</a>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="navbar-collapse collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </li> -->
+      </ul>
+      <form class="form-inline my-2 my-lg-0" action="/search" method="POST">
+        <input class="form-control mr-sm-2" type="text" placeholder="Short URL" name="shortURL" id="shortURL">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+    <div class="jumbotron mt-5">
+        <h1 class="display-3">Shorten URLs</h1>
+        <p class="lead">This app was built by Ben Zuckier for TAMID at Yeshiva University</p>
+      </div>
+    <div class="container">
+        <div class="form-group">
+            <form action="/url" method="POST">
+                <label class="sr-only col-form-label col-form-label-lg" for="inputLarge">Long URL</label>
+                <input required class="form-control form-control-lg" type="text" placeholder="https://example.com/longURL" name="LongURL" id="LongURL">
+                <button type="submit" class="btn btn-primary mt-3">Shrink URL</button>
+            </form>
+        </div>
+        {% if short %}
+        <div class="card text-white bg-primary mb-3" style="max-width: 100%;">
+          <div class="card-header">Shortened URL</div>
+          <div class="card-body">
+            <h4 class="card-title"><a href="https://bzuckier.com/{{ short.short }}">bzuckier.com/{{ short.short }}</a></h4>
+            <p class="card-text">Original URL: <a href="{{ short.url }}">{{ short.url }}</a>  clicks:{{ short.clicks }}</p>
+          </div>
+        </div>
+        <!-- <p>{{short.short}} hi</p> -->
+        {% endif %}
+    </div>
 </body>
 </html>
