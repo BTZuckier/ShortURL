@@ -114,8 +114,8 @@ app.post('/api', async (req, res) => {//restful api that return short from long
         };
         newUrl = await urls.insert(shortUrl);
     }
-    var shortURL = "https://bzuckier.com/" + newURL.short;
-    res.json(JSON.stringify(shortURL));//return short url
+//     var shortURL = "https://bzuckier.com/" + newURL.short;
+    res.json(shortURL);//return short url
 });
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
