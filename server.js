@@ -97,13 +97,13 @@ app.post('/api', async (req, res) => {//restful api that return short from long
     }
 //     var newUrl = null;
     try { //check if long url is already in db
-        var newUrl = await urls.findOne({ url });
-        return res.json(newURL);
+        var oldURL = await urls.findOne({ url });
+        return res.json(oldURL);
     }catch(err){
         console.log(err);
         res.status(500).json('bad db');
     }
-    if(!newUrl){//Long URL didn't exist in db
+//     if(!newUrl){//Long URL didn't exist in db
         var short = shortid.generate();
         while(short.match(/-|_/)){//no dashes or underscores
             short = shortid.generate();//generate a new id
@@ -115,7 +115,7 @@ app.post('/api', async (req, res) => {//restful api that return short from long
         };
         var newUrl = await urls.insert(shortUrl);
         res.json(newURL);
-    }
+//     }
 //     var shortURL = "https://bzuckier.com/" + newURL.short;
 //     res.json(newURL);//return short url
 });
