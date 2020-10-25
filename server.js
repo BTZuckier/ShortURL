@@ -31,7 +31,7 @@ app.use('/favicon.ico', express.static('./favicon.ico'));
 //routes
 app.get('/', (req, res)=>{//serve index
     res.render('index.njk')
-})
+});
 
 function home(req, res){//home function for when we have data
     var short = req.short;
@@ -89,6 +89,33 @@ app.post('/search', async (req, res, next) => {
     req.short = shortData;//set url data before passing to be rendered
     return next();//render the page with new data
 }, home);
+
+app.post('/api/', async (req, res) =>{//restful api that return short from long
+    var url = req.body.LongURL;//get the long url from the POST
+    if(url.search("http") != 0){
+        url = "http://" + url;
+    }
+    var newUrl = null;
+    try { //check if long url is already in db
+        newUrl = await urls.findOne({ url });
+    }catch(err){
+        console.log(err);
+        res.status(500).json('bad db');
+    }
+    if(!newUrl){//Long URL didn't exist in db
+        let short = shortid.generate();
+        while(short.match(/-|_/)){//no dashes or underscores
+            short = shortid.generate();//generate a new id
+        }
+        const shortUrl = {//submit these fields into the db
+            url,
+            short,
+            clicks:0,
+        };
+        newUrl = await urls.insert(shortUrl);
+    }
+    res.json("https://bzuckier.com/" + short);//return short url
+});
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
     const short = req.params.short;//get the short id from the GET
