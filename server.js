@@ -38,7 +38,10 @@ function home(req, res){//home function for when we have data
 }
 
 app.post('/url', async (req, res, next) => {
-    const url = req.body.LongURL;//get the long url from the POST
+    var url = req.body.LongURL;//get the long url from the POST
+    if(url.search("http") != 0){
+        url = "http://" + url;
+    }
     //TODO: short words instead
     //TODO: custom short urls
     let newUrl = null;
