@@ -1,13 +1,14 @@
 require('dotenv').config();
+//webserver stuff
 const express = require('express');
 const helmet = require('helmet');
 const nunjucks = require('nunjucks');
 
+//db stuff
 const monk = require('monk');
 const db = monk(process.env.MONGO_PASS);
 
 const shortid = require('shortid');
-const { static } = require('express');
 
 db.then(() => {//connect to db
     console.log(`connected to mongo`);
@@ -25,9 +26,9 @@ nunjucks.configure('views', {//set the render engine for nunjucks
     autoescape: true,
     express: app
 });
-// app.use(express.static('./public'));
 app.use('/favicon.ico', express.static('./favicon.ico'));
 
+//routes
 app.get('/', (req, res)=>{//serve index
     res.render('index.njk')
 })
@@ -64,8 +65,6 @@ app.post('/url', async (req, res, next) => {
         newUrl = await urls.insert(shortUrl);
     }
     req.short = newUrl;//set url data before passing to be rendered
-        // res.json(inserted);
-        // res.redirect('/api/' + short);
     return next();//render the page with new data
 }, home);
 
@@ -90,46 +89,6 @@ app.post('/search', async (req, res, next) => {
     req.short = shortData;//set url data before passing to be rendered
     return next();//render the page with new data
 }, home);
-
-// async function shortData(req, res){
-//     const short = req.params.short;
-//     var shortened = null;
-//     try {
-//         shortened = await urls.findOne({ short });
-//         // if (shortened) {
-//         //     // res.redirect(url.url);
-//         //     res.render('index.njk', { shortened: shortened });
-//         //     // res.redirect('/');
-//         // } else { 
-//         //     res.status(500).json('poo');
-//         // }
-//         // // res.redirect('/');
-//     } catch(err){
-//         console.log(err);
-//         res.status(500).json('poop');
-//     }
-//     return next();
-// }
-
-// app.get('/api/:short', async (req, res) => {
-//     const short = req.params.short;
-//     var shortened = null;
-//     try {
-//         shortened = await urls.findOne({ short });
-//         if (shortened) {
-//             // res.redirect(url.url);
-//             res.render('index.njk', { shortened: shortened });
-//             // res.redirect('/');
-//         } else { 
-//             res.status(500).json('poo');
-//         }
-//         // res.redirect('/');
-//     } catch(err){
-//         console.log(err);
-//         res.status(500).json('poop');
-//     }
-    
-// });
 
 app.get('/:short', async (req, res)=>{//url encoded param, will accept anything matching the pattern
     const short = req.params.short;//get the short id from the GET

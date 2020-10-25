@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- sets favicon icon -->
     <link rel="icon" href="./favicon.ico">
+    <!-- gets stylesheet from bootswatch -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
     <title>URL Shrtnr</title>
 </head>
 <body>
   <nav class="navbar-dark bg-primary navbar">
-    <div class="d-none d-lg-block">
+    <!-- the md block and md none make it responsively show text or icon on small viewports -->
+    <div class="d-none d-md-block">
       <a class="navbar-brand" href="./">URL Shrtnr</a>
     </div>
-    <div class="d-lg-none">
+    <div class="d-md-none">
       <a class="navbar-brand" href="./">
         <img src="./favicon.ico" width="30" height="30" alt="">
       </a>
     </div>
-
+      <!-- this form searches based on short url to show stats -->
       <form class="form-inline my-2 my-lg-0" action="/search" method="POST">
         <input class="form-control mr-sm-2" type="text" placeholder="Short URL Search" name="shortURL" id="shortURL">
     <div class="d-none d-lg-block">
@@ -30,6 +33,7 @@
         <h1 class="display-3">URL Shrtnr</h1>
         <p class="lead">This app was built by Ben Zuckier for TAMID at Yeshiva University</p>
       </div>
+    <!-- this form submits a long url to generate a short one -->
     <div class="container">
         <div class="form-group">
             <form action="/url" method="POST">
@@ -38,6 +42,7 @@
                 <button type="submit" class="btn btn-primary mt-3">Shrtn URL</button>
             </form>
         </div>
+        <!-- using nunjucks templating language, shows a card with data if exists -->
         {% if short %}
         <div class="card text-white bg-primary mb-3" style="max-width: 100%;">
           <div class="card-header">Shortened URL</div>
