@@ -12,7 +12,7 @@
     "url": "git+https://github.com/BTZuckier/ShortURL.git"
   },
   "author": "Ben Zuckier",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/BTZuckier/ShortURL/issues"
   },
